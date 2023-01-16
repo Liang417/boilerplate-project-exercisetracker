@@ -1,4 +1,3 @@
-import express from 'express';
 import User from '../model/userModel.js';
 import Log from '../model/logModel.js';
 
@@ -7,7 +6,7 @@ export const createUser = async (req, res, next) => {
   const { username } = req.body;
   try {
     const newUser = await User.create({ username });
-    res.status(200).json(newUser);
+    return res.status(200).json(newUser);
   } catch (err) {
     next(err);
   }
@@ -36,7 +35,7 @@ export const createExerciseLog = async (req, res, next) => {
 export const getAllUser = async (req, res, next) => {
   try {
     const allUser = await User.find();
-    res.status(200).json(allUser);
+    return res.status(200).json(allUser);
   } catch (err) {
     next(err);
   }
@@ -65,7 +64,7 @@ export const getUserLogs = async (req, res, next) => {
         date: each.date.toDateString(),
       };
     });
-    res.status(200).json({
+    return res.status(200).json({
       _id: userWithLogs._id,
       username: userWithLogs.username,
       from: new Date(from).toDateString(),
